@@ -13,13 +13,13 @@ void desplegar_gris(Mat in, Mat out);
 void img_binaria(Mat in, Mat out, float val);
 void erosion(Mat in, Mat out, int v);
 void conteo(Mat in);
-void clasificacio_figura(Mat in,int num_fig);
+void clasificacio_figura(Mat in, int num_fig);
 int video();
 
 
 int main()
 {
-	Mat image = imread("C:/Users/gumev/Downloads/AAA.jpg ");
+	Mat image = imread("C:/Users/gumev/Downloads/1.jpg ");
 
 	cout << "canales:" << image.channels() << " filas: " << image.rows << " columnas: " << image.cols << endl;
 	imshow("Original", image);
@@ -139,7 +139,7 @@ void conteo(Mat in)
 
 }
 
-void clasificacio_figura(Mat in,int num_fig) {
+void clasificacio_figura(Mat in, int num_fig) {
 
 	float** uwu = new float* [num_fig];
 	for (int i = 0; i < num_fig; i++) {
@@ -151,29 +151,31 @@ void clasificacio_figura(Mat in,int num_fig) {
 			uwu[i][j] = 0;
 		}
 	}
+	for (int i = 0; i < num_fig; i++)
+		uwu[i][0] = i;
+
 
 	int a = 1;
 
-	for (int i = 0; i < in.rows; i++)
+	for (int i = 0; i < in.rows; i++) {
 		for (int j = 0; j < in.cols; j++)
 		{
-			if ((in.at<float>(i, j) = 0) && ( a == 0 ) ) {
-				
-				
-				uwu[a][0] = in.at<float>(i, j);
-				cout << a << " " << uwu[a][0] << endl;
-				
-				a=a+1;
+			if (in.at<float>(i, j) > 0) {
+				a = (in.at<float>(i, j) / 10.0) - 1;
+				uwu[a][1] = uwu[a][1] + 1;
 			}
-
 		}
+	}
 
 	for (int i = 0; i < num_fig; i++) {
 		for (int j = 0; j < 2; j++) {
-			cout << uwu[i][j] << " " ;
+			cout << uwu[i][j] << " ";
 		}
 		cout << endl;
 	}
+
+
+
 
 }
 

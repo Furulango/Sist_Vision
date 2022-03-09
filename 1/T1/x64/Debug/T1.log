@@ -14,4 +14,6 @@ D:\GitHub\Sist_Vision\1\T1\T1.cpp(129,36): warning C4244: '=': conversión de 'd
           [
               _Tp=float
           ]
+D:\GitHub\Sist_Vision\1\T1\T1.cpp(155,15): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
+D:\GitHub\Sist_Vision\1\T1\T1.cpp(164,37): warning C4244: '=': conversión de 'double' a 'int'; posible pérdida de datos
   T1.vcxproj -> D:\GitHub\Sist_Vision\1\T1\x64\Debug\T1.exe

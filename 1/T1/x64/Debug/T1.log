@@ -1,0 +1,17 @@
+﻿  T1.cpp
+D:\GitHub\Sist_Vision\1\T1\T1.cpp(52,59): warning C4244: '=': conversión de 'double' a '_Tp'; posible pérdida de datos
+          with
+          [
+              _Tp=float
+          ]
+D:\GitHub\Sist_Vision\1\T1\T1.cpp(118,30): warning C4244: '=': conversión de 'double' a '_Tp'; posible pérdida de datos
+          with
+          [
+              _Tp=float
+          ]
+D:\GitHub\Sist_Vision\1\T1\T1.cpp(129,36): warning C4244: '=': conversión de 'double' a '_Tp'; posible pérdida de datos
+          with
+          [
+              _Tp=float
+          ]
+  T1.vcxproj -> D:\GitHub\Sist_Vision\1\T1\x64\Debug\T1.exe

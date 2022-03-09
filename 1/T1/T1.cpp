@@ -11,15 +11,16 @@ using namespace std;
 void grises(Mat in, Mat out);
 void desplegar_gris(Mat in, Mat out);
 void img_binaria(Mat in, Mat out, float val);
-void erosion(Mat in, Mat out, int v);
+void dilatacion(Mat in, Mat out, int v);
 void conteo(Mat in);
 void clasificacio_figura(Mat in, int num_fig);
 int video();
 
+void erosion(Mat in, Mat out, int v);
 
 int main()
 {
-	Mat image = imread("C:/Users/gumev/Downloads/1.jpg ");
+	Mat image = imread("C:/Users/gumev/Downloads/3.jpg ");
 
 	cout << "canales:" << image.channels() << " filas: " << image.rows << " columnas: " << image.cols << endl;
 	imshow("Original", image);
@@ -28,12 +29,15 @@ int main()
 	Mat auxg2(image.rows, image.cols, CV_32FC1);
 	Mat auxu(image.rows, image.cols, CV_32FC1);
 	Mat g_sal(image.rows, image.cols, CV_8UC1);
+
 	grises(image, auxg);
 	img_binaria(auxg, auxu, 50.0);
 	desplegar_gris(auxu, g_sal);
-	imshow("binaria", g_sal);
-	conteo(auxu);
-	desplegar_gris(auxu, g_sal);
+	dilatacion(auxu, auxg2, 2);
+	//imshow("binaria + dilatacion", auxg2);
+
+	conteo(auxg2);
+	desplegar_gris(auxg2, g_sal);
 	imshow("etiquetado", g_sal);
 
 	waitKey(0);
@@ -63,45 +67,6 @@ void img_binaria(Mat in, Mat out, float val)
 			else
 				out.at<float>(i, j) = 255.0;
 		}
-}
-
-void erosion(Mat in, Mat out, int v)
-{
-	for (int i = 0; i < in.rows; i++)
-		for (int j = 0; j < in.cols; j++)
-			out.at<float>(i, j) = in.at<float>(i, j);
-
-	for (int vv = 0; vv < v; vv++)
-	{
-		for (int i = 1; i < in.rows - 1; i++)
-			for (int j = 1; j < in.cols - 1; j++)
-			{
-				if (out.at<float>(i, j) < out.at<float>(i, j - 1))
-					out.at<float>(i, j - 1) = out.at<float>(i, j);
-			}
-
-		for (int i = 1; i < in.rows - 1; i++)
-			for (int j = in.cols - 2; j > 1; j--)
-			{
-				if (out.at<float>(i, j) < out.at<float>(i, j + 1))
-					out.at<float>(i, j + 1) = out.at<float>(i, j);
-			}
-
-		for (int i = 1; i < in.rows - 1; i++)
-			for (int j = 1; j < in.cols - 1; j++)
-			{
-				if (out.at<float>(i, j) < out.at<float>(i - 1, j))
-					out.at<float>(i - 1, j) = out.at<float>(i, j);
-			}
-
-		for (int i = in.rows - 2; i > 1; i--)
-			for (int j = 1; j < in.cols - 1; j++)
-			{
-				if (out.at<float>(i, j) < out.at<float>(i + 1, j))
-					out.at<float>(i + 1, j) = out.at<float>(i, j);
-			}
-
-	}
 }
 
 void conteo(Mat in)
@@ -177,6 +142,10 @@ void clasificacio_figura(Mat in, int num_fig) {
 
 
 
+
+
+
+
 }
 
 int video()
@@ -196,6 +165,45 @@ int video()
 		}
 	}
 	return 0;
+}
+
+void dilatacion(Mat in, Mat out, int v)
+{
+	for (int i = 0; i < in.rows; i++)
+		for (int j = 0; j < in.cols; j++)
+			out.at<float>(i, j) = in.at<float>(i, j);
+
+	for (int vv = 0; vv < v; vv++)
+	{
+		for (int i = 1; i < in.rows - 1; i++)
+			for (int j = 1; j < in.cols - 1; j++)
+			{
+				if (out.at<float>(i, j) > out.at<float>(i, j - 1))
+					out.at<float>(i, j - 1) = out.at<float>(i, j);
+			}
+
+		for (int i = 1; i < in.rows - 1; i++)
+			for (int j = in.cols - 2; j > 1; j--)
+			{
+				if (out.at<float>(i, j) > out.at<float>(i, j + 1))
+					out.at<float>(i, j + 1) = out.at<float>(i, j);
+			}
+
+		for (int i = 1; i < in.rows - 1; i++)
+			for (int j = 1; j < in.cols - 1; j++)
+			{
+				if (out.at<float>(i, j) > out.at<float>(i - 1, j))
+					out.at<float>(i - 1, j) = out.at<float>(i, j);
+			}
+
+		for (int i = in.rows - 2; i > 1; i--)
+			for (int j = 1; j < in.cols - 1; j++)
+			{
+				if (out.at<float>(i, j) > out.at<float>(i + 1, j))
+					out.at<float>(i + 1, j) = out.at<float>(i, j);
+			}
+
+	}
 }
 
 void desplegar_gris(Mat in, Mat out)
